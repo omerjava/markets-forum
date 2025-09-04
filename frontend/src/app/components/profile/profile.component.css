@@ -1,0 +1,48 @@
+.profile-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.photo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.profile-photo {
+    width: 150px;
+    /* fixed width */
+    height: 150px;
+    /* fixed height */
+    object-fit: cover;
+    /* crop instead of stretching */
+    border-radius: 50%;
+    /* make it a circle */
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.upload-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    font-weight: 500;
+    border-radius: 25px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.upload-btn:hover {
+    background: linear-gradient(135deg, #357abd, #2a5d9f);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+.upload-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}

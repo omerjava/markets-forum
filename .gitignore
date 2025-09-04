@@ -1,0 +1,19 @@
+# Node modules
+**/node_modules/
+
+# Angular build output
+**/dist/
+
+# Spring build output
+**/target/
+
+# Docker images
+**/.docker/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
