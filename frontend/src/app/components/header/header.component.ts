@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
 
   isLoggedIn = false;
+  isAdmin = false;
   username = '';
 
   async ngOnInit(): Promise<void> {
@@ -35,6 +36,12 @@ export class HeaderComponent implements OnInit {
     this.keycloak.logout();
   }
 
+  goToAdminPortal(): void {
+    if (this.isLoggedIn && this.isAdmin) {
+      this.router.navigate(['/admin']);
+    }
+  }
+
   goToHome(): void {
     if (this.isLoggedIn) {
       this.router.navigate(['/']);
@@ -48,6 +55,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private updateLoginState(): void {
+    this.isAdmin = this.keycloak.isAdmin()
     this.isLoggedIn = this.keycloak.isLoggedIn();
     this.username = this.keycloak.getUsername();
   }

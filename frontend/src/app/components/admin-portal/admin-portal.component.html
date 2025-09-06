@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<div class="admin-container">
+    <h2>{{ editingCategory ? 'Edit Category' : 'Add Category' }}</h2>
+
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="id" />
+
+        <div>
+            <label class="block text-gray-700">Name</label>
+            <input type="text" formControlName="name" class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div>
+            <label class="block text-gray-700">Description</label>
+            <textarea formControlName="description" class="w-full border rounded px-3 py-2"></textarea>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" [disabled]="categoryForm.invalid" class="btn-submit">
+                {{ editingCategory ? 'Update' : 'Add' }}
+            </button>
+
+            <button *ngIf="editingCategory" type="button" (click)="cancelEdit()" class="btn-cancel">
+                Cancel
+            </button>
+        </div>
+    </form>
+
+    <hr class="my-6" />
+
+    <h3>All Categories</h3>
+    <ul>
+        <li *ngFor="let cat of categories$ | async">
+            <div>
+                <p>{{ cat.name }}</p>
+                <p>{{ cat.description }}</p>
+            </div>
+            <div class="button-group">
+                <button (click)="editCategory(cat)" class="btn-edit">Edit</button>
+                <button (click)="deleteCategory(cat.id)" class="btn-delete">Delete</button>
+            </div>
+        </li>
+    </ul>
+</div>

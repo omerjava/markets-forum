@@ -4,6 +4,7 @@ package com.ofk.api.controller;
 import com.ofk.api.entity.Category;
 import com.ofk.api.service.CategoryService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

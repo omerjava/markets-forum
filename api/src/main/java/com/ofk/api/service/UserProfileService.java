@@ -1,5 +1,6 @@
 package com.ofk.api.service;
 
+import com.ofk.api.entity.Role;
 import com.ofk.api.entity.UserProfile;
 import com.ofk.api.repository.UserProfileRepository;
 import org.springframework.stereotype.Service;
@@ -16,18 +17,20 @@ public class UserProfileService {
         this.repository = repository;
     }
 
-    // Automatically create profile if not exists
-    public UserProfile getOrCreate(String userId, String username, String email) {
+    public UserProfile getOrCreate(String userId, String username, String email, List<Role> roles) {
         return repository.findById(userId)
                 .orElseGet(() -> {
                     UserProfile profile = new UserProfile();
                     profile.setId(userId);
                     profile.setUsername(username);
                     profile.setEmail(email);
+                    profile.setRoles(roles); // save roles here
                     profile.setCreatedAt(LocalDateTime.now());
                     return repository.save(profile);
                 });
     }
+
+
 
     public List<UserProfile> getAll() {
         return repository.findAll();

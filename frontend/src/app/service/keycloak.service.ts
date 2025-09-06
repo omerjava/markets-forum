@@ -13,6 +13,7 @@ export class KeycloakService {
 
   private authenticated = false;
   private initialized = false;
+  private hasAdminRole = false;
 
 
   async init(): Promise<void> {
@@ -29,9 +30,29 @@ export class KeycloakService {
       this.authenticated = authenticated;
       this.initialized = true;
       console.log('Keycloak initialized:', authenticated);
+
+      if (authenticated) {
+        this.updateRoleFlags();
+      }
     } catch (error) {
       console.error('Keycloak init failed:', error);
     }
+  }
+
+  private updateRoleFlags(): void {
+    const token = this.keycloak.tokenParsed;
+    if (!token) {
+      this.hasAdminRole = false;
+      return;
+    }
+
+    const realmRoles: string[] = token.realm_access?.roles || [];
+    const clientRoles: string[] = token.resource_access?.['markets-client']?.roles || [];
+    console.log('realmRoles:', realmRoles);
+
+
+    this.hasAdminRole = realmRoles.includes('ROLE_ADMIN') || clientRoles.includes('ROLE_ADMIN');
+    console.log('Admin role detected:', this.hasAdminRole);
   }
 
   register(): void {
@@ -46,6 +67,10 @@ export class KeycloakService {
 
   logout(): void {
     this.keycloak.logout({ redirectUri: window.location.origin });
+  }
+
+  isAdmin(): boolean {
+    return this.hasAdminRole;
   }
 
   isLoggedIn(): boolean {
@@ -63,6 +88,7 @@ export class KeycloakService {
   async getValidToken(): Promise<string | null> {
     try {
       await this.keycloak.updateToken(30); // refresh if expires in < 30s
+      this.updateRoleFlags(); // re-check roles after refresh
       return this.keycloak.token ?? null;
     } catch (err) {
       console.error('Failed to refresh token', err);

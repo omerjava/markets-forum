@@ -1,0 +1,197 @@
+/* admin-portal.component.css */
+
+/* Page background */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #21303e;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main container */
+.admin-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.admin-container h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1a202c;
+}
+
+.admin-container h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #2d3748;
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 0.5rem;
+}
+
+/* Form */
+.admin-container form {
+    margin-bottom: 2rem;
+}
+
+.admin-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #4a5568;
+}
+
+.admin-container input[type="text"],
+.admin-container textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.admin-container input[type="text"]:focus,
+.admin-container textarea:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+/* Form buttons */
+.admin-container .form-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-container .btn-submit {
+    background-color: #3182ce;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.admin-container .btn-submit:hover:not(:disabled) {
+    background-color: #2b6cb0;
+}
+
+.admin-container .btn-cancel {
+    background-color: #a0aec0;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.admin-container .btn-cancel:hover {
+    background-color: #718096;
+}
+
+.admin-container button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Category List */
+.admin-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-container li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-container li div p {
+    margin: 0;
+}
+
+.admin-container li div p:first-child {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.admin-container li div p:last-child {
+    font-size: 0.875rem;
+    color: #718096;
+}
+
+/* Edit / Delete buttons */
+.admin-container .button-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-container .btn-edit {
+    background-color: #ecc94b;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.admin-container .btn-edit:hover {
+    background-color: #d69e2e;
+}
+
+.admin-container .btn-delete {
+    background-color: #f56565;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.admin-container .btn-delete:hover {
+    background-color: #c53030;
+}
+
+/* Responsive: stack form buttons on small screens */
+@media (max-width: 500px) {
+    .admin-container form .form-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .admin-container li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-container li .button-group {
+        margin-top: 0.5rem;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .admin-container li .button-group button {
+        flex: 1;
+    }
+}

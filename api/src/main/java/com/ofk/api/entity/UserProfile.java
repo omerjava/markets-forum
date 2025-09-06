@@ -26,7 +26,15 @@ public class UserProfile {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String roles; // e.g., ROLE_USER, ROLE_ADMIN
+    // Store roles as a separate table (user_id + role)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private List<Role> roles;
 
     private LocalDateTime createdAt;
 

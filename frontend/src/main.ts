@@ -14,6 +14,7 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { appReducers } from './app/state/app.state';
 import { UserProfileEffects } from './app/state/user-profile/user-profile.effects';
 import { ProfilePhotoEffects } from './app/state/profile-photo/profile-photo.effects';
+import { CategoryEffects } from './app/state/category/category.effects';
 
 
 async function bootstrap() {
@@ -33,7 +34,7 @@ async function bootstrap() {
 
       // ✅ NgRx setup
       provideStore(appReducers),
-      provideEffects([UserProfileEffects, ProfilePhotoEffects]),
+      provideEffects([UserProfileEffects, ProfilePhotoEffects, CategoryEffects]),
       provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
       provideRouterStore(),
     ],
