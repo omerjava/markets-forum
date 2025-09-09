@@ -13,3 +13,8 @@ export const selectCategoryLoading = createSelector(
     selectCategoryState,
     (state) => state.loading
 );
+
+export const selectCategoryById = (categoryId: number) => createSelector(
+    selectCategories,
+    (categories) => categories.find(c => c.id === categoryId)
+);

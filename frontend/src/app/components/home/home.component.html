@@ -1,32 +1,20 @@
 <app-header></app-header>
 
-<div class="container">
-    <h2>Create a Post</h2>
-    <form [formGroup]="postForm" (ngSubmit)="submitPost()">
-        <div>
-            <label for="title">Title:</label>
-            <input id="title" formControlName="title" />
-            <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched">
-                Title is required.
-            </div>
+<div class="home-container">
+    <h1 class="page-title">Forum Home</h1>
+
+    <ng-container *ngIf="loading$ | async; else content">
+        <div class="loading">Loading categories...</div>
+    </ng-container>
+
+    <ng-template #content>
+        <ng-container *ngIf="error$ | async as error">
+            <div class="error">Error: {{ error }}</div>
+        </ng-container>
+
+        <div class="category-list" *ngIf="categories$ | async as categories">
+            <app-category *ngFor="let category of categories" [category]="category">
+            </app-category>
         </div>
-
-        <div>
-            <label for="content">Content:</label>
-            <textarea id="content" formControlName="content"></textarea>
-            <div *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched">
-                Content is required.
-            </div>
-        </div>
-
-        <button type="submit" [disabled]="postForm.invalid">Submit</button>
-    </form>
-
-    <hr />
-
-    <h2>Your Posts</h2>
-    <div *ngFor="let post of posts" class="post-card">
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.content }}</p>
-    </div>
+    </ng-template>
 </div>

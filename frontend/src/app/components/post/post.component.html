@@ -1,0 +1,7 @@
+<div class="post-card">
+    <p>{{ post.content }}</p>
+    <small>By {{ post.user?.username }} on {{ post.createdAt | date }}</small>
+    <div class="likes">
+        👍 {{ post.likes?.length || 0 }}
+    </div>
+</div>

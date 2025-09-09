@@ -1,73 +1,46 @@
-import { HeaderComponent } from "../header/header.component";
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CommonModule } from "@angular/common";
-import { KeycloakService } from "../../service/keycloak.service";
-import { environment } from "../../../environments/environment";
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Category } from '../../models/category';
+import * as CategoryActions from '../../state/category/category.actions';
+import * as ForumThreadActions from '../../state/forum-thread/forum-thread.actions';
+import * as PostActions from '../../state/post/post.actions';
+import * as UserProfileActions from '../../state/user-profile/user-profile.actions';
+
+import * as CategorySelectors from '../../state/category/category.selectors';
+import { CategoryComponent } from '../category/category.component';
+import { HeaderComponent } from '../header/header.component';
+import { CommonModule } from '@angular/common';
+import { AppState } from '../../state/app.state';
+
 
 @Component({
   selector: 'app-home',
-  imports: [HeaderComponent, CommonModule,
-    ReactiveFormsModule],
+  imports: [CategoryComponent, HeaderComponent, CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private keycloak = inject(KeycloakService);
-  private apiUrl = `${environment.apiUrl}`;
+  private store = inject(Store<AppState>);
 
-  postForm: FormGroup;
-  posts: any[] = [];
+  categories$!: Observable<Category[]>;
+  loading$!: Observable<boolean>;
+  error$!: Observable<any>;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.postForm = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required],
-    });
+  ngOnInit(): void {
+    // Load category via NgRx
+    this.store.dispatch(CategoryActions.loadCategories());
+
+    // Load threads via NgRx
+    this.store.dispatch(ForumThreadActions.loadThreads());
+
+    // Load posts via NgRx
+    this.store.dispatch(PostActions.loadPosts());
+
+    // Load user profile via NgRx
+    this.store.dispatch(UserProfileActions.loadMyProfile());
+
+    this.categories$ = this.store.select(CategorySelectors.selectCategories);
+    this.loading$ = this.store.select(CategorySelectors.selectCategoryLoading);
   }
-
-  async addToken() {
-    const token = await this.keycloak.getValidToken();
-    if (!token) {
-      alert('Authentication required');
-      return;
-    }
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    return headers;
-  }
-
-  async ngOnInit() {
-    await this.keycloak.init();
-    this.loadPosts();
-  }
-
-  async loadPosts() {
-    const headersWithToken = await this.addToken();
-
-    this.http.get<any[]>(`${this.apiUrl}/posts`, { headers: headersWithToken }).subscribe({
-      next: (data) => this.posts = data,
-      error: (err) => console.error('Failed to load posts', err)
-    });
-  }
-
-  async submitPost() {
-    const headersWithToken = await this.addToken();
-
-    if (this.postForm.invalid) return;
-
-    this.http.post<any>(`${this.apiUrl}/api/posts`, this.postForm.value, { headers: headersWithToken }).subscribe({
-      next: (newPost) => {
-        this.posts.push(newPost);
-        this.postForm.reset();
-      },
-      error: (err) => console.error('Failed to create post', err)
-    });
-  }
-
 }

@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state/app.state';
@@ -33,6 +32,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadMyProfile());
+    this.userProfile$.subscribe(v => console.log("userProfile Stete: ", v))
   }
 
   onPhotoSelected(event: Event): void {

@@ -1,0 +1,12 @@
+<div class="category-card">
+    <!-- Clicking name navigates to category detail page -->
+    <h2>
+        <a [routerLink]="['/category', category.id]" class="category-link">
+            {{ category.name }}
+        </a>
+    </h2>
+    <div class="thread-list">
+        <app-forum-thread *ngFor="let thread of category.threads" [thread]="thread">
+        </app-forum-thread>
+    </div>
+</div>

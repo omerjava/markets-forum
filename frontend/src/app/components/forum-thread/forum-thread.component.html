@@ -1,0 +1,8 @@
+<div class="thread-card">
+    <h3>{{ thread.title }}</h3>
+    <p>{{ thread.content }}</p>
+    <div class="post-list">
+        <app-post *ngFor="let post of thread.posts" [post]="post">
+        </app-post>
+    </div>
+</div>

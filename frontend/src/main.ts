@@ -15,6 +15,11 @@ import { appReducers } from './app/state/app.state';
 import { UserProfileEffects } from './app/state/user-profile/user-profile.effects';
 import { ProfilePhotoEffects } from './app/state/profile-photo/profile-photo.effects';
 import { CategoryEffects } from './app/state/category/category.effects';
+import { ForumThreadEffects } from './app/state/forum-thread/forum-thread.effects';
+import { PostEffects } from './app/state/post/post.effects';
+import { LikeEffects } from './app/state/like/like.effects';
+import { TagEffects } from './app/state/tag/tag.effects';
+import { AttachmentEffects } from './app/state/attachment/attachment.effects';
 
 
 async function bootstrap() {
@@ -34,7 +39,7 @@ async function bootstrap() {
 
       // ✅ NgRx setup
       provideStore(appReducers),
-      provideEffects([UserProfileEffects, ProfilePhotoEffects, CategoryEffects]),
+      provideEffects([UserProfileEffects, ProfilePhotoEffects, CategoryEffects, ForumThreadEffects, AttachmentEffects, PostEffects, LikeEffects, TagEffects]),
       provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
       provideRouterStore(),
     ],

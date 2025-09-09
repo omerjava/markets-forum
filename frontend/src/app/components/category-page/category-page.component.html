@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<div class="category-page">
+    <!-- Category Title -->
+    <h1 *ngIf="category$ | async as category; else loadingCategory">
+        {{ category.name }}
+    </h1>
+
+    <ng-template #loadingCategory>
+        <div *ngIf="categoryLoading$ | async">Loading category...</div>
+    </ng-template>
+
+    <!-- Error -->
+    <ng-container *ngIf="threadsError$ | async as error">
+        <div class="error">Error: {{ error }}</div>
+    </ng-container>
+
+    <!-- Thread List -->
+    <div class="thread-list" *ngIf="threads$ | async as threads">
+        <div *ngFor="let thread of threads" class="thread-card">
+            <h3 contenteditable="true" (blur)="updateThread(thread)" [innerText]="thread.title"></h3>
+            <p>{{ thread.posts?.length || 0 }} posts</p>
+        </div>
+    </div>
+
+    <!-- Create New Thread -->
+    <div class="create-thread">
+        <h2>Create a new thread</h2>
+        <input [(ngModel)]="newThreadTitle" placeholder="Thread title" />
+        <button (click)="createThread()">Create</button>
+    </div>
+</div>
