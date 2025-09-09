@@ -6,7 +6,6 @@ import { Tag } from "./tag";
 export interface ForumThread {
     id: number;
     title: string;
-    content: string;
     createdAt?: string;
     user?: UserProfile;
     category?: Category;

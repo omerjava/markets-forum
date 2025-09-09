@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ForumThread } from '../models/forum-thread';
 import { environment } from '../../environments/environment';
+import { ForumThreadRequest } from '../models/forum-thread-request';
 
 @Injectable({ providedIn: 'root' })
 export class ForumThreadService {
@@ -17,11 +18,11 @@ export class ForumThreadService {
     return this.http.get<ForumThread>(`${this.apiUrl}/${id}`);
   }
 
-  create(thread: ForumThread): Observable<ForumThread> {
+  create(thread: ForumThreadRequest): Observable<ForumThread> {
     return this.http.post<ForumThread>(this.apiUrl, thread);
   }
 
-  update(id: number, thread: ForumThread): Observable<ForumThread> {
+  update(id: number, thread: ForumThreadRequest): Observable<ForumThread> {
     return this.http.put<ForumThread>(`${this.apiUrl}/${id}`, thread);
   }
 
