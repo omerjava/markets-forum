@@ -1,6 +1,6 @@
 package com.ofk.api.controller;
 
-
+import com.ofk.api.dto.ForumThreadRequest;
 import com.ofk.api.entity.ForumThread;
 import com.ofk.api.service.ForumThreadService;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/threads")
 public class ForumThreadController {
+
     private final ForumThreadService service;
 
     public ForumThreadController(ForumThreadService service) {
@@ -29,13 +30,14 @@ public class ForumThreadController {
     }
 
     @PostMapping
-    public ForumThread create(@RequestBody ForumThread thread) {
-        return service.create(thread);
+    public ResponseEntity<ForumThread> create(@RequestBody ForumThreadRequest request) {
+        ForumThread created = service.create(request);
+        return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ForumThread> update(@PathVariable Long id, @RequestBody ForumThread thread) {
-        ForumThread updated = service.update(id, thread);
+    public ResponseEntity<ForumThread> update(@PathVariable Long id, @RequestBody ForumThreadRequest request) {
+        ForumThread updated = service.update(id, request);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 

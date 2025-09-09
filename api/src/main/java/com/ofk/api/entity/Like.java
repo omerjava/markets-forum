@@ -1,5 +1,6 @@
 package com.ofk.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,5 +23,6 @@ public class Like {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonIgnore
     private Post post;
 }

@@ -1,6 +1,7 @@
 package com.ofk.api.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,10 +28,12 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "thread_id", nullable = false)
+    @JsonIgnore
     private ForumThread thread;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private UserProfile user;
 
     // Self-reference for replies
